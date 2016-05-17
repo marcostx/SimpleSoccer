@@ -162,7 +162,7 @@ public class Main {
         Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
         //Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 
-        window.setResizable(false);
+        window.setResizable(true);
 
         int y = center.y - window.getHeight() / 2;
         window.setLocation(center.x - window.getWidth() / 2, y >= 0 ? y : 0);

@@ -40,15 +40,15 @@ public class ChaseBall extends State<FieldPlayer> {
 
         //if the player is the closest player to the ball then he should keep
         //chasing it
-        if (player.isClosestTeamMemberToBall()) {
+        //if (player.isClosestTeamMemberToBall()) {
             player.Steering().SetTarget(player.Ball().Pos());
 
-            return;
-        }
+        //    return;
+        //}
 
         //if the player is not closest to the ball anymore, he should return back
         //to his home region and wait for another opportunity
-        player.GetFSM().ChangeState(ReturnToHomeRegion.Instance());
+        //player.GetFSM().ChangeState(ReturnToHomeRegion.Instance());
     }
 
     @Override

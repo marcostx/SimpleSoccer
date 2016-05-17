@@ -26,10 +26,12 @@ public class SoccerPitch {
     public static final int NumRegionsHorizontal = 6;
     public static final int NumRegionsVertical = 3;
     
-    private SoccerBall m_pBall;
-    private SoccerTeam m_pRedTeam;
-    private SoccerTeam m_pBlueTeam;
+    private SoccerBall m_pBall;     // ball
+    private SoccerTeam m_pRedTeam;  // red team
+    private SoccerTeam m_pBlueTeam; // blue team
     
+    
+    // goals
     private Goal m_pRedGoal;
     private Goal m_pBlueGoal;
     //container for the boundary walls
@@ -70,7 +72,7 @@ public class SoccerPitch {
         }
     }
 
-//------------------------------- ctor -----------------------------------
+//------------------------------- Constructor -----------------------------------
 //------------------------------------------------------------------------
     public SoccerPitch(int cx, int cy) {
         m_cxClient = cx;

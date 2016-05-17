@@ -61,6 +61,7 @@ public class SoccerTeam {
     private PlayerBase m_pSupportingPlayer;
     private PlayerBase m_pReceivingPlayer;
     private PlayerBase m_pPlayerClosestToBall;
+    private PlayerBase secondPlayerClosestToBall;
     //the squared distance the closest player is from the ball
     private double m_dDistSqToBallOfClosestPlayer;
     //players use this to determine strategic positions on the playing field
@@ -234,6 +235,25 @@ public class SoccerTeam {
                 m_pPlayerClosestToBall = cur;
             }
         }
+        ClosestSoFar = MaxFloat;
+        it = m_Players.listIterator();
+
+        while (it.hasNext()) {
+            PlayerBase cur = it.next();
+            if (cur != m_pPlayerClosestToBall){
+                //calculate the dist. Use the squared value to avoid sqrt
+                double dist = Vec2DDistanceSq(cur.Pos(), Pitch().Ball().Pos());
+
+                //keep a record of this value for each player
+                cur.SetDistSqToBall(dist);
+
+                if (dist < ClosestSoFar) {
+                    ClosestSoFar = dist;
+
+                    secondPlayerClosestToBall = cur;
+                }
+            }
+        }
 
         m_dDistSqToBallOfClosestPlayer = ClosestSoFar;
     }
@@ -255,6 +275,7 @@ public class SoccerTeam {
         m_pReceivingPlayer = null;
         m_pControllingPlayer = null;
         m_pPlayerClosestToBall = null;
+        secondPlayerClosestToBall = null;
 
         //setup the state machine
         m_pStateMachine = new StateMachine<SoccerTeam>(this);
@@ -318,9 +339,9 @@ public class SoccerTeam {
         }
 
         //render the sweet spots
-        if (Prm.bSupportSpots && InControl()) {
-            m_pSupportSpotCalc.Render();
-        }
+        //if (Prm.bSupportSpots && InControl()) {
+        //    m_pSupportSpotCalc.Render();
+        //}
 
 //define(SHOW_TEAM_STATE);
         if (def(SHOW_TEAM_STATE)) {
@@ -778,6 +799,14 @@ public class SoccerTeam {
 
     public PlayerBase PlayerClosestToBall() {
         return m_pPlayerClosestToBall;
+    }
+    
+    public void SetSecondPlayerClosestToBall(PlayerBase plyr) {
+        secondPlayerClosestToBall = plyr;
+    }
+
+    public PlayerBase SecondPlayerClosestToBall() {
+        return secondPlayerClosestToBall;
     }
 
     public double ClosestDistToBallSq() {

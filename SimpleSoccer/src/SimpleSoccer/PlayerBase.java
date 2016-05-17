@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import static SimpleSoccer.ParamLoader.Prm;
 import static SimpleSoccer.MessageTypes.*;
+import SimpleSoccer.TeamStates.Defending;
 import static common.D2.Vector2D.*;
 import common.Game.Region;
 import static common.Messaging.MessageDispatcher.*;
@@ -248,7 +249,13 @@ abstract public class PlayerBase extends MovingEntity implements AutoList.Interf
      * @return true if the player is the closest player in his team to the ball
      */
     public boolean isClosestTeamMemberToBall() {
-        return Team().PlayerClosestToBall() == this;
+        boolean first  = Team().SecondPlayerClosestToBall() == this;
+        boolean second = Team().PlayerClosestToBall() == this;
+        
+        if (Team().GetFSM().CurrentState() == Defending.Instance() && first)
+            return true;
+        
+        return false;
     }
 
     /**
